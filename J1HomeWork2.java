@@ -42,7 +42,7 @@ public class J1HomeWork2 {
                 System.out.println();
             }
         }
-//        5 EXERCISE
+//          5 EXERCISE
         {
             int[] arr = {2, 7, 156, -4, 35, -1, 0, 67, -56, 78};
             int min = arr[0], max = arr[0];
@@ -55,5 +55,28 @@ public class J1HomeWork2 {
                 System.out.println("Min = " + min + " Max = " + max);
 
         }
+        int[] massive = {1,2,3,6,7,19,1,40};
+        System.out.println(isArraySim(massive));
     }
+    //          6 EXERCISE
+    public static boolean isArraySim(int[] arr) {
+        boolean result = false;
+        int sumLeft , sumRight;
+        for (int i = 0; i < arr.length; i++) {
+            sumLeft = 0;
+            sumRight = 0;
+            for (int j = 0; j < i; j++) {
+                sumLeft = sumLeft + arr[j];
+            }
+            for (int j = i; j < arr.length ; j++) {
+                sumRight = sumRight + arr[j];
+            }
+            if (sumLeft == sumRight) {
+                result = true;
+                break;
+            }
+        }
+            return result;
+    }
+
 }
