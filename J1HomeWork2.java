@@ -27,5 +27,20 @@ public class J1HomeWork2 {
             }
             System.out.println();
         }
+//          4 EXERCISE
+        {
+            final int N = 7; // Длинна квадрата
+            int[][] square =new int[N][N];
+            for (int i = 0; i < N; i++) {
+                square[i][i] = 1;
+                square[i][(N - i - 1)] = 1;
+            }
+            for (int i = 0; i < N ; i++) {
+                for (int j = 0; j < N; j++) {
+                    System.out.print(square[i][j] + " ");
+                }
+                System.out.println();
+            }
+        }
     }
 }
