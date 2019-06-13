@@ -42,5 +42,18 @@ public class J1HomeWork2 {
                 System.out.println();
             }
         }
+//        5 EXERCISE
+        {
+            int[] arr = {2, 7, 156, -4, 35, -1, 0, 67, -56, 78};
+            int min = arr[0], max = arr[0];
+                for (int j = 0; j < arr.length; j++) {
+                    if (min > arr[j])
+                        min = arr[j];
+                    if (max < arr[j])
+                        max = arr[j];
+                }
+                System.out.println("Min = " + min + " Max = " + max);
+
+        }
     }
 }
