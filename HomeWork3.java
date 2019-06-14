@@ -8,10 +8,11 @@ import java.util.Scanner;
 
 public class HomeWork3 {
     public static void main(String[] args) {
-        playGame(6);
+//  Play Numbers      playGameNumbers(6);
+//  Play Words      playGameWords();
     }
 
-    static void playGame(int n) {       // n - Number of trys
+    static void playGameNumbers(int n) {       // n - Number of trys
         Scanner scn = new Scanner(System.in);
         Random rnd = new Random();
         int newGame;
@@ -34,5 +35,41 @@ public class HomeWork3 {
             System.out.println("Play again? 1 - Yes Other - No");
             newGame = scn.nextInt();
         } while (newGame == 1);
+    }
+
+    static void playGameWords() {
+        String[] words = {"apple", "orange", "lemon", "banana", "apricot",
+                "avocado", "broccoli", "carrot", "cherry", "garlic",
+                "grape", "melon", "leak", "kiwi", "mango",
+                "mushroom", "nut", "olive", "pea", "peanut", "pear",
+                "pepper", "pineapple", "pumpkin", "potato"};
+        String aiWord, userWord;
+        Random rnd = new Random();
+        Scanner scn = new Scanner(System.in);
+        aiWord = words[rnd.nextInt(25)];
+        System.out.println("What word i think?");
+        do {
+            userWord = scn.next();
+            if (userWord.equals(aiWord)) {
+                System.out.println("You Win! My word was: " + aiWord);
+            } else System.out.println(compare(aiWord,userWord));
+        } while (!userWord.equals(aiWord));
+    }
+
+    static String compare(String a, String b) { //Сравнивание двух слов и вывод одинаковых символов
+        String finalString = "";
+        for (int i = 0; i < 15 ; i++) {
+            if ((i < a.length()) & (i < b.length())){
+                if (a.charAt(i) == b.charAt(i)){
+                    finalString = finalString + a.charAt(i);
+                    continue;
+                } else {
+                    finalString = finalString + "#";
+                    continue;
+                }
+            }
+            finalString = finalString + "#";
+        }
+        return finalString;
     }
 }
