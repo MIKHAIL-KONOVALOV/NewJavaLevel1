@@ -7,7 +7,8 @@ import java.util.Scanner;
 
 public class TicTacToe {
 
-    final int SIZE = 5;
+    final int SIZE = 5;     // Размер поля
+    final int N = 2;        // Сколько нужно в ряд для победы
     final char DOT_X = 'x';
     final char DOT_O = 'o';
     final char DOT_EMPTY = '.';
@@ -82,31 +83,40 @@ public class TicTacToe {
     }
 
     boolean checkWin(char dot) {
-        return checkSquare(map,dot);
+        return checkSquare(map,dot,N);
     }
 
-    boolean checkSquare(char[][] square, char ch) {
-        if ((checkLines(square,ch)) || (checkHoriz(square,ch)) || (checkDiag(square,ch)) )
+    boolean checkSquare(char[][] square, char ch, int n) { // Проверк линий столбцов и диагоналей на n элем. подряд
+        if ( checkLines(square,ch,n) || checkHoriz(square,ch,n) || checkDiag(square,ch,n) )
             return true;
         return false;
     }
-    boolean checkDiag(char[][] square, char ch) {
-        boolean uldr = true;
-        boolean dlur = true;
-        for (int i = 0; i < square.length && uldr ; i++) {
-            uldr = square[i][i] == ch;
+    boolean checkDiag(char[][] square, char ch,int n) {
+        boolean uldr = false;
+        boolean dlur = false;
+        for (int i = 0; i < (square.length - n + 1) && !uldr ; i++) {
+            uldr = true;
+            for (int j = i; j < (n + i) && uldr; j++) {
+                uldr = square[j][j] == ch;
+            }
         }
-        for (int i = 0; i < square.length && dlur; i++) {
-            dlur = square[(square.length - i - 1)][i] == ch;
+        for (int i = 0; i < (square.length - n + 1) && !dlur; i++) {
+            dlur = true;
+            for (int j = i; j < (n + i) && dlur; j++) {
+                dlur = square[j][(square.length - j - 1)] == ch;
+            }
         }
         return uldr || dlur;
     }
 
-    boolean checkLines(char[][] square, char ch) {
-        for (int i = 0; i < square.length; i++) {
-            boolean checkOk = true;
-            for (int j = 0; j < square.length && checkOk; j++) {
-                checkOk = square[i][j] == ch;
+    boolean checkLines(char[][] square, char ch, int n) {
+        boolean checkOk = false;
+        for (int i = 0; i < square.length && !checkOk; i++) {  //Проход по строкам
+            for (int j = 0; j < (square.length - n + 1) && !checkOk; j++) {  // Цикл в строке от начала до конца - n
+                checkOk = true;
+                for (int k = j; k < n +j && checkOk; k++) {
+                    checkOk = square[i][k] == ch;
+                }
             }
                 if (checkOk)
                     return true;
@@ -114,17 +124,32 @@ public class TicTacToe {
         return false;
     }
 
-    boolean checkHoriz(char[][] square, char ch) {
-        for (int i = 0; i < square.length; i++) {
-            boolean checkOk = true;
-            for (int j = 0; j < square.length && checkOk; j++) {
-                checkOk = square[j][i] == ch;
+    boolean checkHoriz(char[][] square, char ch, int n) {
+        boolean checkOk = false;
+        for (int i = 0; i < square.length && !checkOk; i++) {  //Проход по столбцам
+            for (int j = 0; j < (square.length - n + 1) && !checkOk; j++) {  // Цикл в столбце от начала до конца - n
+                checkOk = true;
+                for (int k = j; k < n + j && checkOk; k++) {
+                    checkOk = square[k][i] == ch;
+                }
             }
             if (checkOk)
                 return true;
         }
         return false;
     }
+
+//    boolean checkHoriz(char[][] square, char ch) {
+//        for (int i = 0; i < square.length; i++) {
+//            boolean checkOk = true;
+//            for (int j = 0; j < square.length && checkOk; j++) {
+//                checkOk = square[j][i] == ch;
+//            }
+//            if (checkOk)
+//                return true;
+//        }
+//        return false;
+//    }
 
     boolean isMapFull() {
         for (int i = 0; i < SIZE ; i++)
