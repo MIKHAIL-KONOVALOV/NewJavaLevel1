@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 public class TicTacToe {
 
-    final int SIZE = 5;     // Размер поля
-    final int N = 2;        // Сколько нужно в ряд для победы
+    final int SIZE = 4;     // Размер поля
+    final int N = 3;        // Сколько нужно в ряд для победы
     final char DOT_X = 'x';
     final char DOT_O = 'o';
     final char DOT_EMPTY = '.';
@@ -74,12 +74,35 @@ public class TicTacToe {
     }
 
     void aiTurn() {
-        int x,y;
-        do {
-            x = rnd.nextInt(3);
-            y = rnd.nextInt(3);
-        } while (!isCellValid(x,y));
-        map[x][y] = DOT_O;
+        int aiX = 0, aiY = 0;
+        boolean aiCanWin = false;
+        boolean humanCanWin = false;
+
+        for (int i = 0; i < map.length; i++ ) // Проход по пустым полям и проверка возможности победы Ai или человека
+            for (int j = 0; j < map.length; j++) {
+                if (map[i][j] == DOT_EMPTY) {
+                    map[i][j] = DOT_O;
+                    if ( checkWin(DOT_O)){
+                        aiCanWin = true;
+                        aiX = i; aiY = j;
+                        break;
+                    }
+                    map[i][j] = DOT_X;
+                    if ( !humanCanWin && checkWin(DOT_X) ) {
+                        aiX = i; aiY = j;
+                        humanCanWin = true;
+                    }
+                    map[i][j] = DOT_EMPTY;
+
+                }
+            }
+        if (aiCanWin || humanCanWin) // В случае возможности победы AI выигрывает или блокирует поле
+            map[aiX][aiY] = DOT_O;
+        else do {
+                aiX = rnd.nextInt(SIZE);
+                aiY = rnd.nextInt(SIZE);
+            } while (!isCellValid(aiX, aiY));
+            map[aiX][aiY] = DOT_O;
     }
 
     boolean checkWin(char dot) {
